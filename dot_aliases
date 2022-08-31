@@ -1,0 +1,36 @@
+# alias ssh83="ssh zzt@10.1.17.83"    # Instead: better use ssh Host name in ~/.ssh/config
+alias sshre="service ssh start"  
+alias fq="cd ~/clash  ;  ./clash -d . "
+# sh basic binary tools config, mimic bash like zsh shortcuts
+alias ll='ls -alF -h'
+alias mkdir="mkdir -p"     # -p make parent dirs as needed
+alias df="df -h"           # -h prints human readable format
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias cl="clear"
+alias py="python"
+# terminal editor and multplexer setting
+alias v="vim"
+alias t="tmux"
+alias tl="tmux ls"
+alias ta="tmux attach"
+alias t0="tmux a -t 0"
+alias t1="tmux a -t 1"
+alias t2="tmux a -t 2"
+alias t3="tmux a -t 3"
+
+# NVIDIA CUDA 
+alias n="nvidia-smi"
+alias wn="watch -n 1 -d  nvidia-smi"
+alias c="nvcc -V"
+#alias ec1 ="export CUDA_VISIBLE_DEVICES=1"
+#alias ec2 ="export CUDA_VISIBLE_DEVICES=2"
+#alias ec3 ="export CUDA_VISIBLE_DEVICES=3"
+
+# Useful tool
+alias cntpwd="echo File cnt :  ;  ls -l | grep "^-" | wc -l"
+alias pk="ls |head -n 10  ;  cntpwd"
+alias pwho="ps aux | grep"
+alias echopath='echo $PATH | tr -s ":" "\n"'   # Pretty print the path
+
