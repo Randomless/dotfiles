@@ -1,8 +1,13 @@
 # alias ssh83="ssh zzt@10.1.17.83"    # Instead: better use ssh Host name in ~/.ssh/config
 alias sshre="service ssh start"  
 alias fq="cd ~/clash  ;  ./clash -d . "
+alias ff="export https_proxy=http://10.204.128.13:7890/ ; export http_proxy=http://10.204.128.13:7890"
+alias ffn="unset http_proxy ; unset https_proxy"
+
 # sh basic binary tools config, mimic bash like zsh shortcuts
 alias ll='ls -alF -h'
+alias ea='exa --all'
+alias el='exa --long --all'
 alias mkdir="mkdir -p"     # -p make parent dirs as needed
 alias df="df -h"           # -h prints human readable format
 alias ..="cd .."
@@ -19,6 +24,7 @@ alias t0="tmux a -t 0"
 alias t1="tmux a -t 1"
 alias t2="tmux a -t 2"
 alias t3="tmux a -t 3"
+alias tka="tmux kill-session -a"
 
 # NVIDIA CUDA 
 alias n="nvidia-smi"
