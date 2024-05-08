@@ -281,6 +281,8 @@ terminal:
       - '#ffffff'
   fontSize: 25
   customColorSchemes: []
+  autoOpen: false
+  copyOnSelect: true
 ssh:
   knownHosts:
     - host: 10.204.128.14
@@ -301,3 +303,4 @@ profileDefaults:
     disableDynamicTitle: true
     type: ssh
 profileBlacklist: []
+recoverTabs: false
