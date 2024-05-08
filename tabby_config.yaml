@@ -303,4 +303,3 @@ profileDefaults:
     disableDynamicTitle: true
     type: ssh
 profileBlacklist: []
-recoverTabs: false
