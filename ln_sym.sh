@@ -18,4 +18,7 @@ ln "$current_dir/pip.conf" ~/.pip/pip.conf
 # 通常不推荐在脚本中直接source ~/.zshrc，但如果需要此行为，请取消下面的注释
 # source ~/.zshrc
 
-echo "脚本执行完成，已使用当前目录下的文件创建符号链接。"
+echo "已使用当前目录下的文件创建符号链接。"
+
+cp ./ssh_config ~/.ssh/config
+echo "已将ssh_config复制到~/.ssh/config"

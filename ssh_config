@@ -1,0 +1,203 @@
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+
+Host 10
+    HostName 10.204.128.10
+    User zzt
+    ForwardAgent yes
+    ForwardX11 yes
+    ForwardX11Trusted yes
+
+Host 14
+    HostName 10.204.128.14
+    User zzt
+    ForwardAgent yes
+    ForwardX11 yes
+    ForwardX11Trusted yes
+
+Host RA_ARCNet_dev
+    HostName 10.204.128.10
+    User root
+    Port 3098
+
+Host geodetector_v1.9
+    HostName 10.204.128.10
+    User root
+    Port 9988
+
+Host geodetector_syn
+    HostName 10.204.128.10
+    User root
+    Port 9977
+
+Host geodetector_zlj
+    HostName 10.204.128.15
+    User root
+    Port 7400
+    # ProxyCommand sshpass -p '123456' ssh -q -W %h:%p 10.204.128.15-
+
+Host 15
+    HostName 10.204.128.15
+    User zzt
+    ForwardX11 yes
+    ForwardX11Trusted yes
+
+Host RA_ARCNet_dev
+    HostName 10.204.128.14
+    User root
+    Port 3098
+
+
+# github
+Host github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_rsa
+
+Host gitee                 
+    HostName gitee.com
+    IdentityFile  ~/.ssh/id_ed25519
+    PreferredAuthentications publickey
+    User Randomless
+# Host nwd_dev_10
+#     HostName 10.204.128.10
+#     User root
+#     Port 9066
+
+# Host mmrotate_exe_env
+#     HostName 10.204.128.10
+#     User root
+#     Port 3088
+
+# Host mmdetection_dev
+#     HostName 10.204.128.14
+#     User root
+#     Port 5060
+
+# Host 106_geo
+#     HostName 10.204.128.106
+#     User root
+#     Port 3031
+
+# Host 10_geo_cuda11
+#     HostName 10.204.128.10
+#     User root
+#     Port 3097
+
+# Host rareplane_dev
+#     HostName 10.204.128.14
+#     User root
+#     Port 3006
+
+# Host mmfewshot_dev_10
+#     HostName 10.204.128.10
+#     User root
+#     Port 3010
+
+# Host mmfewshot_dev
+#     HostName 10.204.128.14
+#     User root
+#     Port 3008
+
+# Host base_dev
+#     HostName 10.204.128.14
+#     User root
+#     Port 6051
+
+# Host rtk_dev
+#     HostName 10.204.128.10
+#     User root
+#     Port 5003
+
+# Host fsce
+#     HostName 10.204.128.10
+#     User root
+#     Port 6002
+
+
+
+# Host fsdet
+#     HostName 10.204.128.10
+#     User root
+#     Port 6003
+
+
+# Host mmcls_dev
+#     HostName 10.204.128.10
+#     User root
+#     Port 6050
+
+
+# Host softteacher_dev
+#     HostName 10.204.128.10
+#     User root
+#     Port 3090
+
+    
+# Host s2anet_geo_plane_dev
+#     HostName 10.204.128.10
+#     User root
+#     Port 3099
+
+
+
+
+# Host base_dev_net
+#     HostName 10.204.128.10
+#     User root
+#     Port 5589
+# Host SCRDet
+#     HostName 10.204.128.10
+#     User root
+#     Port 3006
+
+# Host OPLD
+#     HostName 10.204.128.10
+#     User root
+#     Port 3007
+
+# Host roi_transformer
+#     HostName 10.204.128.10
+#     User root
+#     Port 3010
+
+# Host rrpn_plusplus
+#     HostName 10.204.128.10
+#     User root
+#     Port 3009
+
+# Host dfc2021
+#     HostName 10.204.128.14
+#     User root
+#     Port 5000
+
+# Host sense_earth_2020
+#     HostName 10.204.128.14
+#     User root
+#     Port 5002
+
+# Host dfc2020
+#     HostName 10.204.128.14
+#     User root
+#     Port 5003
+
+# Host tf_2_2-gpu
+#     HostName 10.204.128.10
+#     User root
+#     Port 5023
+
+# Host detectron2-gpu
+#     HostName 10.204.128.10
+#     User root
+#     Port 5080
+
+# Host radi
+#     HostName 10.204.128.10
+#     User root
+#     Port 5550
+
+
+
+# Host yx-tf-det
+#     HostName 10.204.128.10
+#     User root
+#     Port 5555
