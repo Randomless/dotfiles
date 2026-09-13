@@ -30,7 +30,26 @@ fi
 echo "🚀 开始配置..."
 
 # 1. 基础工具安装
-sudo apt update && sudo apt install -y curl git build-essential fzf lf software-properties-common
+# 等待 Ubuntu 后台 unattended-upgrades 释放 dpkg/apt 锁，避免脚本无限等待。
+wait_for_apt_lock() {
+    local timeout=300
+    local elapsed=0
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock >/dev/null 2>&1; do
+        if [ "$elapsed" -ge "$timeout" ]; then
+            echo "❌ apt/dpkg 锁等待超时，请稍后重试。"
+            return 1
+        fi
+        echo "⏳ apt 正被后台更新进程占用，等待锁释放... (${elapsed}/${timeout}s)"
+        sleep 5
+        elapsed=$((elapsed + 5))
+    done
+}
+
+wait_for_apt_lock
+sudo dpkg --configure -a
+sudo apt update
+wait_for_apt_lock
+sudo apt install -y curl git build-essential fzf lf software-properties-common
 
 # 2. 安装 chsrc（已安装则跳过）
 if command -v chsrc >/dev/null 2>&1; then
