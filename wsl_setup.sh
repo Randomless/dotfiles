@@ -5,16 +5,15 @@ TASKS=(
     "更新 Ubuntu 软件包列表并安装基础工具 (curl, git, fzf, lf)"
     "安装 chsrc (全能换源工具)"
     "安装 uv (Python 包管理器) 并使用 chsrc 换源"
-    "安装 NVM (Node Version Manager) 替代原生 Node"
-    "通过 NVM 安装 Node.js LTS 并使用 chsrc 换源"
+    "检测 Node.js；未安装时通过 NVM 安装 Node.js LTS 并使用 chsrc 换源"
     "安装 Fish Shell、Fisher、nvm.fish 插件"
-    "使用 nvm 安装 @openai/codex (无需 sudo)"
-    "安装 OpenCode.ai 工具"
+    "检测并安装 @openai/codex (无需 sudo)"
+    "检测并安装 pi 工具"
     "将默认 Shell 切换为 Fish"
 )
 
 echo "==========================================="
-echo "    WSL 自动化环境深度配置脚本 (NVM 版)"
+echo "    WSL 自动化环境深度配置脚本"
 echo "==========================================="
 echo "准备执行以下任务:"
 for i in "${!TASKS[@]}"; do
@@ -33,28 +32,40 @@ echo "🚀 开始配置..."
 # 1. 基础工具安装
 sudo apt update && sudo apt install -y curl git build-essential fzf lf software-properties-common
 
-# 2. 安装 chsrc
-echo "📦 安装 chsrc..."
-curl -L https://gitee.com/RubyMetric/chsrc/releases/download/pre/chsrc-x64-linux -o chsrc
-chmod +x chsrc
-sudo mv chsrc /usr/local/bin/
+# 2. 安装 chsrc（已安装则跳过）
+if command -v chsrc >/dev/null 2>&1; then
+    echo "✅ chsrc 已安装，跳过。"
+else
+    echo "📦 安装 chsrc..."
+    curl -L https://gitee.com/RubyMetric/chsrc/releases/download/pre/chsrc-x64-linux -o chsrc
+    chmod +x chsrc
+    sudo mv chsrc /usr/local/bin/
+fi
 
-# 3. 安装 uv 并换源
-echo "🐍 安装 uv..."
-curl -LsSf https://astral.sh/uv/install.sh | sh
-export PATH="$HOME/.cargo/bin:$PATH"
+# 3. 安装 uv 并换源（已安装则跳过）
+if command -v uv >/dev/null 2>&1 || [ -x "$HOME/.local/bin/uv" ]; then
+    echo "✅ uv 已安装，跳过。"
+else
+    echo "🐍 安装 uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 chsrc set python
 
-# 4. 安装 NVM (Bash 环境预装)
-echo "🌌 安装 NVM..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# 5. 通过 NVM 安装 Node 并换源
-echo "🟢 通过 NVM 安装 Node.js LTS..."
-nvm install --lts
-chsrc set node
+# 4-5. 已有 Node.js 时不安装 NVM
+if command -v node >/dev/null 2>&1; then
+    echo "✅ Node.js 已安装 ($(node --version))，跳过 NVM 和 Node.js 安装。"
+else
+    echo "🌌 安装 NVM..."
+    export NVM_DIR="$HOME/.nvm"
+    if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    fi
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    echo "🟢 通过 NVM 安装 Node.js LTS..."
+    nvm install --lts
+fi
+command -v node >/dev/null 2>&1 && chsrc set node
 chsrc set ubuntu
 
 # 6. 安装 Fish Shell 及 NVM 插件
@@ -69,16 +80,22 @@ fish -c "fisher install rafaelrinaldi/pure"
 fish -c "fisher install jethrokuan/z"
 fish -c "fisher install jorgebucaran/nvm.fish"
 
-# 7. 安装全局工具 (现在不需要 sudo 了！)
-echo "🤖 安装 OpenAI Codex 工具..."
-# 在 bash 脚本中调用 fish 来执行安装，确保路径正确
-fish -c "nvm install lts > /dev/null; npm install -g @openai/codex; set -U nvm_default_version lts"
+# 7. 安装全局工具（已安装则跳过）
+if command -v codex >/dev/null 2>&1; then
+    echo "✅ Codex 已安装，跳过。"
+else
+    echo "🤖 安装 OpenAI Codex 工具..."
+    npm install -g @openai/codex
+fi
 
-# 8. 安装 OpenCode
-echo "💻 安装 OpenCode..."
-curl -fsSL https://opencode.ai/install | bash
+if command -v pi >/dev/null 2>&1; then
+    echo "✅ pi 已安装，跳过。"
+else
+    echo "🧠 安装 pi 工具..."
+    npm install -g @mariozechner/pi-coding-agent
+fi
 
-# 9. 切换默认 Shell 并清理提示
+# 8. 切换默认 Shell 并清理提示
 echo "🔄 切换默认 Shell 为 Fish..."
 sudo chsh -s $(which fish) $USER
 # 在 Fish 配置文件中静默 greeting
