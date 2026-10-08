@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SESSION="${1:-hapi}"
+
+if ! command -v tmux >/dev/null 2>&1; then
+  echo "错误：未找到 tmux" >&2
+  exit 1
+fi
+
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+  echo "tmux 会话 '$SESSION' 已存在，直接连接。"
+  exec tmux attach-session -t "$SESSION"
+fi
+
+# tmux 的 pane 编号从 1 开始，不假设窗口编号；始终从当前活动窗格拆分。
+tmux new-session -d -s "$SESSION" -n hapi -c "$HOME"
+tmux send-keys -t "$SESSION" 'cloudflared --config "$HOME/.cloudflared/config.yml" tunnel run hapi' C-m
+
+tmux split-window -h -t "$SESSION" -c "$HOME"
+tmux send-keys -t "$SESSION" 'hapi hub --relay' C-m
+
+tmux split-window -v -t "$SESSION" -c "$HOME"
+tmux send-keys -t "$SESSION" 'hapi pi' C-m
+
+tmux select-layout -t "$SESSION" tiled
+tmux select-pane -t "$SESSION":
+exec tmux attach-session -t "$SESSION"

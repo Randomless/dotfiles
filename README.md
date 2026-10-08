@@ -11,6 +11,7 @@ WSL 环境配置与常用终端配置文件。
 - `ssh_config`：从 Windows 用户目录复制的 SSH 配置
 - `wsl_setup.sh`：WSL 环境初始化脚本
 - `copy_config.sh`：将配置文件复制到用户目录，不创建符号链接
+- `scripts/start-hapi`：在 tmux 中启动 HAPI 所需服务
 
 ## 使用方式
 
@@ -36,6 +37,22 @@ WSL 环境配置与常用终端配置文件。
 
 - OpenAI Codex
 - pi coding agent
+
+### 启动 HAPI
+
+`start-hapi` 在 tmux 中启动 Cloudflare Tunnel、HAPI Hub 和 Pi。需要预先安装并配置 `tmux`、`cloudflared` 和 HAPI CLI。默认使用 `hapi` 会话，也可以指定会话名：
+
+```bash
+./scripts/start-hapi
+./scripts/start-hapi my-session
+```
+
+如需将命令加入 PATH，可建立符号链接：
+
+```bash
+mkdir -p ~/.local/bin
+ln -sfn ~/Program/dotfiles/scripts/start-hapi ~/.local/bin/start-hapi
+```
 
 ## 代理命令
 
