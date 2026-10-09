@@ -23,6 +23,9 @@ tmux send-keys -t "$SESSION" 'hapi hub --relay' C-m
 tmux split-window -v -t "$SESSION" -c "$HOME"
 tmux send-keys -t "$SESSION" 'hapi pi' C-m
 
+tmux split-window -v -t "$SESSION" -c "$HOME/Program"
+tmux send-keys -t "$SESSION" 'hapi runner start --workspace-root /home/neo/Program' C-m
+
 tmux select-layout -t "$SESSION" tiled
 tmux select-pane -t "$SESSION":
 exec tmux attach-session -t "$SESSION"

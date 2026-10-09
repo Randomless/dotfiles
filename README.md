@@ -40,7 +40,7 @@ WSL 环境配置与常用终端配置文件。
 
 ### 启动 HAPI
 
-`start-hapi` 在 tmux 中启动 Cloudflare Tunnel、HAPI Hub 和 Pi。需要预先安装并配置 `tmux`、`cloudflared` 和 HAPI CLI。默认使用 `hapi` 会话，也可以指定会话名：
+`start-hapi` 在 tmux 中启动 Cloudflare Tunnel、HAPI Hub、Pi 和 HAPI Runner（工作区为 `/home/neo/Program`）。需要预先安装并配置 `tmux`、`cloudflared` 和 HAPI CLI。默认使用 `hapi` 会话，也可以指定会话名：
 
 ```bash
 ./scripts/start-hapi
